@@ -5,7 +5,7 @@ import pandas as pd
 
 import joblib# load model
 
-model = joblib.load("../models/model_improve.pkl")
+model = joblib.load("../models/classifier.pkl")
 
 app = Flask(__name__)
 

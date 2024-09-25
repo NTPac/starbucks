@@ -106,7 +106,7 @@ def create_model():
             print('----------------------------------------------------------------------')
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         # Save the model as a pickle file
-        with open('models/model_improve.pkl', 'wb') as file:
+        with open(model_filepath, 'wb') as file:
             pickle.dump(best_model, file)
     else:
         print('Please provide the filepath of the pickle file to '\
