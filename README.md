@@ -10,10 +10,17 @@ Build a machine learning model that predicts offers based on user information an
 ## File Description
 ~~~~~~~
         starbucks
+          |-- app
+                |-- templates
+                        |-- fe.html
+                |-- run.py
           |-- data
                 |-- transcript.json
                 |-- portfolio.json
                 |-- profile.json
+                |-- portfolio_for_run.json
+          |-- models
+                |-- train_classifier.py
           |-- Starbucks_Capstone_notebook.ipynb
           |-- Starbucks_Capstone_notebook-zh.ipynb
           |-- README
@@ -28,6 +35,13 @@ List library:
 - nltk
 - scikit-learn
 - plotly
+
+## Instructions:
+1. Run run ML pipeline that trains classifier and saves
+        `python models/train_classifier.py models/classifier.pkl`
+2. Go to `app` directory: `cd app`
+3. Run your web app: `python run.py`
+4. Go to http://127.0.0.1:5000/
 
 ## Licensing, Authors, Acknowledgements
 Udacity

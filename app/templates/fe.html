@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Offers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .offers {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get Offers</h1>
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" min="0">
+        </div>
+        <div class="form-group">
+            <label for="income">Income:</label>
+            <input type="number" id="income" min="0">
+        </div>
+        <div class="form-group">
+            <label for="became_member_on">Became Member On (< 2018-07-30):</label>
+            <input type="date" id="became_member_on">
+        </div>
+        <div class="form-group"></div>
+            <label for="event">Event:</label>
+            <select id="event">
+                <option value="0">offer_received</option>
+                <option value="1">offer_viewed</option>
+                <option value="3">offer_completed</option>
+            </select>
+        </div>
+        <button onclick="getOffers()">Get Offers</button>
+        <div class="offers" id="offers"></div>
+    </div>
+
+    <script>
+        async function getOffers() {
+            const gender = document.getElementById('gender').value;
+            const age = document.getElementById('age').value;
+            const income = document.getElementById('income').value;
+            const became_member_on = document.getElementById('became_member_on').value;
+            const event = document.getElementById('event').value;
+
+            const userInfo = {
+                gender: gender,
+                age: age === "" ? "0" : age,
+                income: income === "" ? "0" : income,
+                became_member_on: became_member_on === "" ? "2018-07-30" : became_member_on,
+                event: event
+            };
+
+
+            const response = await fetch('http://127.0.0.1:5000/get_offers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userInfo)
+            });
+
+            const data = await response.json();
+            displayOffers(data.offers);
+        }
+
+        function displayOffers(offers) {
+            const offersDiv = document.getElementById('offers');
+            offersDiv.innerHTML = '<h2>Offers:</h2>';
+            const ul = document.createElement('ul');
+            
+            offers.forEach(offer => {
+                const li = document.createElement('li');
+                
+                // Create a string with the offer details
+                const offerDetails = `
+                    <strong>ID:</strong> ${offer.id}<br>
+                    <strong>Reward:</strong> ${offer.reward}<br>
+                    <strong>Channels:</strong> ${offer.channels}<br>
+                    <strong>Difficulty:</strong> ${offer.difficulty}<br>
+                    <strong>Duration:</strong> ${offer.duration}<br>
+                    <strong>Offer Type:</strong> ${offer.offer_type}
+                `;
+                
+                // Set the inner HTML of the list item to the offer details
+                li.innerHTML = offerDetails;
+                ul.appendChild(li);
+            });
+            
+            offersDiv.appendChild(ul);
+        }
+    </script>
+</body>
+</html>
