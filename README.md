@@ -7,12 +7,7 @@ This data set contains simulated data that mimics customer behavior on the Starb
 ## Problem Statement
 Build a machine learning model that predicts offers based on user information and offer event
 
-### Project includes 3 parts:
-1. Data: data set to train the model
-2. Models: Build a model to classify messages during a disaster using a data set created by "Data".
-3. App: Use data from the "Data" section and Model from the "Model" section to initialize the message classification system in a disaster
-
-File Description
+## File Description
 ~~~~~~~
         starbucks
           |-- data
